@@ -1,163 +1,104 @@
-# 🚀 SolveToGrow
+# SolveToGrow
 
-> **Solve problems. Learn continuously. Grow together.**
+SolveToGrow is a collaborative learning repository for Arham, Huzaifa, and Ahmed. The goal is to practice problem solving regularly, share solutions, and build a strong foundation in algorithms and data structures together.
 
-Welcome to **SolveToGrow**, a collaborative repository where developers come together to solve programming challenges, share solutions, and improve their problem-solving skills through consistent practice.
+## Purpose
 
-Whether you're preparing for coding interviews, competitive programming, or simply sharpening your algorithmic thinking, this repository is built to help everyone grow.
+This repository is designed to help the team:
 
----
+- solve programming problems consistently
+- learn from different approaches
+- document solutions in a structured way
+- improve problem-solving and debugging skills
+- grow together as developers
 
-## 🎯 Our Mission
+## Repository Structure
 
-The goal of SolveToGrow is simple:
-
-- Solve programming problems consistently.
-- Learn from different approaches.
-- Improve logical and analytical thinking.
-- Collaborate with fellow developers.
-- Build a strong problem-solving habit.
-
-> Every solved problem is one step closer to becoming a better engineer.
-
----
-
-## 📚 Topics Covered
-
-- Data Structures
-- Algorithms
-- Dynamic Programming
-- Graph Algorithms
-- Trees & Binary Trees
-- Binary Search
-- Greedy Algorithms
-- Backtracking
-- Recursion
-- Sorting & Searching
-- Linked Lists
-- Stacks & Queues
-- Hash Maps
-- Math
-- Bit Manipulation
-- Sliding Window
-- Two Pointers
-- Competitive Programming
-- Interview Questions
-- And much more...
-
----
-
-## 📁 Repository Structure
-
-```
+```text
 SolveToGrow/
-│
-├── LeetCode/
-│   ├── Easy/
-│   ├── Medium/
-│   └── Hard/
-│
-├── HackerRank/
-│
-├── Codeforces/
-│
-├── CodeChef/
-│
-├── AtCoder/
-│
-├── CSES/
-│
-├── Interview/
-│
-├── Algorithms/
-│
-├── DataStructures/
-│
-└── README.md
+├── arham-dev/
+├── huzaifa-dev/
+├── ahmed-dev/
+├── problems-unified/
+├── index.html
+├── arham-dev.html
+├── huzaifa-dev.html
+├── ahmed-dev.html
+├── generate_site.py
+├── README.md
+└── .gitignore
 ```
 
-Feel free to expand the structure as the repository grows.
+## Folder Guide
 
----
+- arham-dev/: personal workspace for Arham
+- huzaifa-dev/: personal workspace for Huzaifa
+- ahmed-dev/: personal workspace for Ahmed
+- problems-unified/: shared folder for common or collaborative problem solutions
 
-## 🤝 Contributing
+## File Naming Convention
 
-We welcome contributions from everyone.
+To keep everything consistent and easy to browse, use this naming pattern for problem files:
 
-Before contributing:
+```text
+01_problem_name.md
+02_problem_name.py
+03_problem_name.cpp
+```
 
-- Write clean and readable code.
-- Add comments only where necessary.
-- Keep file names meaningful.
-- Mention the problem source.
-- Include the time and space complexity whenever possible.
-- Follow the existing folder structure.
+Rules:
 
-Every contribution, big or small, helps the community learn.
-
----
-
-## 💡 Solution Format
-
-Each solution should ideally include:
-
-- Problem Name
-- Platform
-- Difficulty
-- Programming Language
-- Approach
-- Time Complexity
-- Space Complexity
-- Source Link (if publicly shareable)
+- start with a two-digit number
+- use lowercase letters and underscores
+- include a short problem name
+- keep the extension matching the language used
 
 Example:
 
-```
-Two Sum
-
-Platform: LeetCode
-Language: Python
-
-Time Complexity: O(n)
-Space Complexity: O(n)
+```text
+01_two_sum.py
+02_longest_substring.py
+03_binary_search.cpp
 ```
 
----
+## Contribution Style
 
-## 🌟 Why SolveToGrow?
+When adding solutions, try to keep them organized and clear:
 
-Programming is not about memorizing solutions.
+- use descriptive file names
+- mention the problem name and platform
+- include the language used
+- write the approach briefly
+- include time and space complexity when possible
 
-It is about developing the ability to think, analyze, and solve unfamiliar problems.
+## Suggested Solution Template
 
-Consistency beats intensity.
+```md
+# Problem Name
+- Platform:
+- Difficulty:
+- Language:
+- Approach:
+- Time Complexity:
+- Space Complexity:
+```
 
-One problem every day is better than solving hundreds once a month.
+## Recommended Topics
 
----
+- arrays and strings
+- linked lists
+- stacks and queues
+- trees and graphs
+- dynamic programming
+- recursion and backtracking
+- sorting and searching
+- math and bit manipulation
 
-## 📈 Our Goal
+## Getting Started
 
-Build one of the best open repositories for collaborative problem solving where developers can:
+1. Pick your personal folder.
+2. Add your solution files there.
+3. Place shared or common problems in the unified problems folder.
+4. Keep the repository clean and easy to navigate.
 
-- Learn
-- Contribute
-- Improve
-- Inspire others
-
----
-
-## ⭐ Support
-
-If you find this repository helpful:
-
-- ⭐ Star the repository
-- 🍴 Fork it
-- 🤝 Contribute
-- 💬 Share it with your friends
-
-Let's grow together—one problem at a time.
-
----
-
-**Happy Coding! 🚀**
+Welcome to a better, more organized way of growing through problem solving.

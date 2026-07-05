@@ -3,7 +3,7 @@ from urllib.parse import quote
 import html
 
 ROOT = Path(__file__).resolve().parent
-SHARED_FOLDER = "problems-unified"
+SHARED_FOLDER = "problems"
 
 DEVELOPERS = [
     {
@@ -27,8 +27,8 @@ DEVELOPERS = [
         "ring": "rgba(59, 130, 246, 0.2)",
     },
     {
-        "folder": "ahmed-dev",
-        "name": "Ahmed",
+        "folder": "ahmad-dev",
+        "name": "Ahmad",
         "initials": "AH",
         "focus": "Code challenges",
         "accent": "#f97316",
@@ -734,8 +734,8 @@ code {
     margin-left: 0;
   }
 }
-/* Modern glow theme overrides */
-:root {
+/* Modern glow theme overrides (dark is opt-in via [data-theme="dark"]) */
+[data-theme="dark"] {
   color-scheme: dark;
   --ink: #eaf2ff;
   --muted: #9fb0ca;
@@ -748,7 +748,7 @@ code {
   --glow-warm: rgba(249, 115, 22, 0.26);
 }
 
-body {
+[data-theme="dark"] body {
   background:
     radial-gradient(circle at 12% 12%, rgba(20, 184, 166, 0.34), transparent 28%),
     radial-gradient(circle at 86% 10%, rgba(59, 130, 246, 0.28), transparent 32%),
@@ -756,13 +756,13 @@ body {
     linear-gradient(135deg, #050914 0%, #07111f 42%, #111827 100%);
 }
 
-body::before {
+[data-theme="dark"] body::before {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
 }
 
-.hero {
+[data-theme="dark"] .hero {
   background:
     linear-gradient(135deg, rgba(15, 23, 42, 0.88), rgba(17, 94, 89, 0.62) 48%, rgba(88, 28, 8, 0.42)),
     rgba(7, 17, 31, 0.94);
@@ -773,25 +773,25 @@ body::before {
   color: var(--ink);
 }
 
-.stat,
-.mini-stat,
-.search-box input,
-.empty-state,
-.meta-item {
+[data-theme="dark"] .stat,
+[data-theme="dark"] .mini-stat,
+[data-theme="dark"] .search-box input,
+[data-theme="dark"] .empty-state,
+[data-theme="dark"] .meta-item {
   border-color: rgba(255, 255, 255, 0.14);
   background: rgba(15, 23, 42, 0.68);
   box-shadow: 0 16px 38px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.developer-card,
-.file-card {
+[data-theme="dark"] .developer-card,
+[data-theme="dark"] .file-card {
   border-color: rgba(255, 255, 255, 0.14);
   background: rgba(15, 23, 42, 0.74);
   box-shadow: 0 22px 58px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.developer-card::before,
-.file-card::before {
+[data-theme="dark"] .developer-card::before,
+[data-theme="dark"] .file-card::before {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 34%, var(--ring, rgba(20, 184, 166, 0.16)));
   opacity: 0.88;
 }
@@ -841,8 +841,11 @@ body::before {
 }
 
 .expand-mark {
-  background: rgba(15, 23, 42, 0.72);
   transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+}
+
+[data-theme="dark"] .expand-mark {
+  background: rgba(15, 23, 42, 0.72);
 }
 
 .file-toggle,
@@ -881,26 +884,297 @@ body::before {
     grid-template-columns: 1fr;
   }
 }
+
+/* --- Interactive UI additions --- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.86rem;
+  cursor: pointer;
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ghost-btn:hover {
+  border-color: var(--accent, #14b8a6);
+  transform: translateY(-1px);
+  box-shadow: 0 0 22px var(--ring, rgba(20, 184, 166, 0.16));
+}
+
+.ghost-btn:focus-visible {
+  outline: 3px solid var(--ring, rgba(20, 184, 166, 0.24));
+  outline-offset: 2px;
+}
+
+.theme-toggle .theme-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Show sun in dark mode (click for light), moon in light mode */
+.theme-toggle .icon-dark { display: inline; }
+.theme-toggle .icon-light { display: none; }
+[data-theme="dark"] .theme-toggle .icon-dark { display: none; }
+[data-theme="dark"] .theme-toggle .icon-light { display: inline; }
+
+.toolbar-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: end;
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+
+.chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 13px;
+  background: var(--paper);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.16s ease, color 0.16s ease, background 0.16s ease;
+}
+
+.chip:hover {
+  border-color: var(--accent, #14b8a6);
+  color: var(--ink);
+}
+
+.chip.is-active {
+  border-color: var(--accent, #14b8a6);
+  background: var(--soft, #d8fbf4);
+  color: var(--accent, #14b8a6);
+  box-shadow: 0 0 18px var(--ring, rgba(20, 184, 166, 0.18));
+}
+
+.chip:focus-visible {
+  outline: 3px solid var(--ring, rgba(20, 184, 166, 0.24));
+  outline-offset: 2px;
+}
+
+.code-wrap {
+  position: relative;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  border: 1px solid rgba(148, 163, 184, 0.34);
+  border-radius: 7px;
+  padding: 6px 11px;
+  background: rgba(15, 23, 42, 0.82);
+  color: #e2e8f0;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.code-wrap:hover .copy-btn,
+.copy-btn:focus-visible {
+  opacity: 1;
+}
+
+.copy-btn:hover {
+  border-color: var(--accent, #14b8a6);
+}
+
+.copy-btn.is-copied {
+  border-color: #22c55e;
+  color: #bbf7d0;
+}
+
+.copy-btn:focus-visible {
+  outline: 3px solid var(--ring, rgba(20, 184, 166, 0.28));
+  outline-offset: 2px;
+}
+
+.owner-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: var(--soft, #d8fbf4);
+  color: var(--accent, #14b8a6);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.file-heading-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+.file-heading-row .file-heading {
+  margin: 0;
+}
+
+@media (max-width: 560px) {
+  .topbar {
+    flex-wrap: wrap;
+  }
+
+  .copy-btn {
+    opacity: 1;
+  }
+}
+"""
+
+THEME_INIT_JS = """
+(function () {
+  try {
+    var stored = localStorage.getItem("stg-theme");
+    var theme = stored || (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    document.documentElement.setAttribute("data-theme", theme);
+  } catch (e) {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
+})();
 """
 
 SITE_JS = """
 (function () {
+  const root = document.documentElement;
+
+  // --- Theme toggle ---------------------------------------------------------
+  const themeToggle = document.querySelector("[data-theme-toggle]");
+  if (themeToggle) {
+    const applyLabel = () => {
+      const isDark = root.getAttribute("data-theme") === "dark";
+      themeToggle.setAttribute("aria-pressed", String(isDark));
+      themeToggle.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
+    };
+    applyLabel();
+    themeToggle.addEventListener("click", () => {
+      const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("stg-theme", next); } catch (e) {}
+      applyLabel();
+    });
+  }
+
+  // --- Copy code buttons ----------------------------------------------------
+  document.querySelectorAll("[data-copy]").forEach((btn) => {
+    const wrap = btn.closest(".code-wrap");
+    const code = wrap ? wrap.querySelector("code") : null;
+    if (!code) {
+      return;
+    }
+    btn.addEventListener("click", async () => {
+      const text = code.innerText;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+        }
+        const original = btn.dataset.label || "Copy";
+        btn.textContent = "Copied!";
+        btn.classList.add("is-copied");
+        window.setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove("is-copied");
+        }, 1400);
+      } catch (e) {
+        btn.textContent = "Copy failed";
+        window.setTimeout(() => { btn.textContent = btn.dataset.label || "Copy"; }, 1400);
+      }
+    });
+  });
+
+  // --- Expand / collapse cards ---------------------------------------------
+  const cardsAll = Array.from(document.querySelectorAll("[data-expand-card]"));
+
+  function setCardOpen(card, open) {
+    const toggle = card.querySelector("[data-expand-toggle]");
+    const panel = card.querySelector("[data-expand-panel]");
+    card.classList.toggle("is-open", open);
+    if (toggle) toggle.setAttribute("aria-expanded", String(open));
+    if (panel) panel.setAttribute("aria-hidden", String(!open));
+  }
+
+  cardsAll.forEach((card) => {
+    const toggle = card.querySelector("[data-expand-toggle]");
+    const panel = card.querySelector("[data-expand-panel]");
+    if (!toggle || !panel) {
+      return;
+    }
+    toggle.addEventListener("click", () => {
+      setCardOpen(card, !card.classList.contains("is-open"));
+    });
+  });
+
+  const expandAll = document.querySelector("[data-expand-all]");
+  const collapseAll = document.querySelector("[data-collapse-all]");
+  if (expandAll) {
+    expandAll.addEventListener("click", () => {
+      cardsAll.forEach((card) => { if (!card.hidden) setCardOpen(card, true); });
+    });
+  }
+  if (collapseAll) {
+    collapseAll.addEventListener("click", () => {
+      cardsAll.forEach((card) => setCardOpen(card, false));
+    });
+  }
+
+  // --- Search + language filter --------------------------------------------
   const searchInput = document.querySelector("[data-file-search]");
   const cards = Array.from(document.querySelectorAll("[data-search]"));
   const emptyState = document.querySelector("[data-empty-state]");
   const visibleCount = document.querySelector("[data-visible-count]");
-  const toggles = Array.from(document.querySelectorAll("[data-expand-toggle]"));
+  const chips = Array.from(document.querySelectorAll("[data-lang-filter]"));
+  let activeLang = "all";
 
   function updateFileList() {
-    if (!searchInput || cards.length === 0) {
+    if (cards.length === 0) {
       return;
     }
-
-    const query = searchInput.value.trim().toLowerCase();
+    const query = (searchInput ? searchInput.value : "").trim().toLowerCase();
     let visible = 0;
 
     cards.forEach((card) => {
-      const isMatch = card.dataset.search.includes(query);
+      const matchesText = card.dataset.search.includes(query);
+      const matchesLang = activeLang === "all" || card.dataset.lang === activeLang;
+      const isMatch = matchesText && matchesLang;
       card.hidden = !isMatch;
       if (isMatch) {
         visible += 1;
@@ -910,29 +1184,27 @@ SITE_JS = """
     if (emptyState) {
       emptyState.hidden = visible !== 0;
     }
-
     if (visibleCount) {
       visibleCount.textContent = `${visible} file${visible === 1 ? "" : "s"} shown`;
     }
   }
 
-  toggles.forEach((toggle) => {
-    const card = toggle.closest("[data-expand-card]");
-    const panel = card ? card.querySelector("[data-expand-panel]") : null;
-
-    if (!card || !panel) {
-      return;
-    }
-
-    toggle.addEventListener("click", () => {
-      const isOpen = card.classList.toggle("is-open");
-      toggle.setAttribute("aria-expanded", String(isOpen));
-      panel.setAttribute("aria-hidden", String(!isOpen));
+  chips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      activeLang = chip.dataset.langFilter;
+      chips.forEach((c) => {
+        const on = c === chip;
+        c.classList.toggle("is-active", on);
+        c.setAttribute("aria-pressed", String(on));
+      });
+      updateFileList();
     });
   });
 
-  if (searchInput && cards.length > 0) {
+  if (searchInput) {
     searchInput.addEventListener("input", updateFileList);
+  }
+  if ((searchInput || chips.length > 0) && cards.length > 0) {
     updateFileList();
   }
 })();
@@ -1082,6 +1354,29 @@ def render_code_board() -> str:
     """
 
 
+def render_theme_toggle() -> str:
+    return """
+      <button class="ghost-btn theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Toggle theme">
+        <span class="theme-icon" aria-hidden="true"><span class="icon-dark">&#9790;</span><span class="icon-light">&#9728;</span></span>
+        <span>Theme</span>
+      </button>
+    """
+
+
+def render_language_chips(files) -> str:
+    languages = sorted({get_language(path) for path in files})
+    if not languages:
+        return ""
+
+    chips = ['<button class="chip is-active" type="button" data-lang-filter="all" aria-pressed="true">All</button>']
+    for language in languages:
+        chips.append(
+            f'<button class="chip" type="button" data-lang-filter="{html_attr(language)}" aria-pressed="false">{html.escape(language)}</button>'
+        )
+
+    return f'<div class="filter-chips" role="group" aria-label="Filter by language">{"".join(chips)}</div>'
+
+
 def render_developer_card(developer) -> str:
     files = get_problem_files(developer["folder"])
     line_count = total_lines(files)
@@ -1114,17 +1409,25 @@ def render_developer_card(developer) -> str:
     """
 
 
-def render_file_card(path: Path, developer) -> str:
+def render_file_card(path: Path, developer, owner_label: str = "") -> str:
     content = read_problem_content(path)
     relative_path = path.relative_to(ROOT).as_posix()
     preview = get_preview_line(content)
-    search_blob = f"{path.name} {relative_path} {get_language(path)} {content[:1800]}"
+    language = get_language(path)
+    search_blob = f"{path.name} {relative_path} {language} {owner_label} {content[:1800]}"
+
+    owner_tag = (
+        f'<span class="owner-tag">{html.escape(owner_label)}</span>' if owner_label else ""
+    )
 
     return f"""
-      <article class="file-card" data-expand-card data-search="{html_attr(search_blob)}" style="--accent: {developer['accent']}; --soft: {developer['soft']}; --ring: {developer['ring']};">
+      <article class="file-card" data-expand-card data-search="{html_attr(search_blob)}" data-lang="{html_attr(language)}" style="--accent: {developer['accent']}; --soft: {developer['soft']}; --ring: {developer['ring']};">
         <button class="file-toggle" type="button" aria-expanded="false" data-expand-toggle>
           <span class="file-title">
-            <span class="file-heading">{html.escape(path.name)}</span>
+            <span class="file-heading-row">
+              <span class="file-heading">{html.escape(path.name)}</span>
+              {owner_tag}
+            </span>
             <span class="file-summary">{html.escape(preview)}</span>
           </span>
           <span class="file-side">
@@ -1136,9 +1439,12 @@ def render_file_card(path: Path, developer) -> str:
           <div class="file-detail">
             <div class="file-detail-inner">
               <p class="file-path">{html.escape(relative_path)}</p>
-              <pre><code>{html.escape(get_code_excerpt(content))}</code></pre>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" data-copy data-label="Copy">Copy</button>
+                <pre><code>{html.escape(get_code_excerpt(content))}</code></pre>
+              </div>
               <div class="file-meta">
-                <span class="meta-item">{html.escape(get_language(path))}</span>
+                <span class="meta-item">{html.escape(language)}</span>
                 <span class="meta-item">{get_line_count(content)} lines</span>
                 <span class="meta-item">{html.escape(format_file_size(path))}</span>
                 <a class="file-link" href="{page_url(path)}">Open raw file</a>
@@ -1165,11 +1471,65 @@ def render_file_section(title: str, files, empty_message: str, developer) -> str
     """
 
 
+SHARED_STYLE = {
+    "accent": "#8b5cf6",
+    "soft": "#ede9fe",
+    "warm": "#e0e7ff",
+    "ring": "rgba(139, 92, 246, 0.2)",
+}
+
+
+def collect_all_files():
+    """Return (path, style, owner_label) for every developer + shared file."""
+    entries = []
+    for developer in DEVELOPERS:
+        label = f"{developer['name']} Dev"
+        for path in get_problem_files(developer["folder"]):
+            entries.append((path, developer, label))
+    for path in get_problem_files(SHARED_FOLDER):
+        entries.append((path, SHARED_STYLE, "Shared"))
+    return entries
+
+
 def build_index_page():
     developer_cards = "\n".join(render_developer_card(developer) for developer in DEVELOPERS)
     developer_files = [path for folder in DEVELOPER_FOLDERS for path in get_problem_files(folder)]
     shared_files = get_problem_files(SHARED_FOLDER)
-    all_files = developer_files + shared_files
+    all_entries = collect_all_files()
+    all_files = [entry[0] for entry in all_entries]
+
+    if all_entries:
+        file_cards = "\n".join(
+            render_file_card(path, style, owner_label) for path, style, owner_label in all_entries
+        )
+        library = f"""
+    <section class="file-section" aria-label="All problem files">
+      <div class="section-heading">
+        <div>
+          <h2>Problem Library</h2>
+          <p>Search and filter every solution across the team.</p>
+        </div>
+        <div class="toolbar-actions">
+          <button class="ghost-btn" type="button" data-expand-all>Expand all</button>
+          <button class="ghost-btn" type="button" data-collapse-all>Collapse all</button>
+        </div>
+      </div>
+      <section class="toolbar">
+        <label class="search-box">
+          <span>Search files</span>
+          <input type="search" placeholder="Name, owner, language, or code text" data-file-search />
+        </label>
+        <p class="visible-count" data-visible-count>{len(all_entries)} files shown</p>
+      </section>
+      {render_language_chips(all_files)}
+      <p class="empty-state" data-empty-state hidden>No matching files found.</p>
+      <div class="file-grid">
+        {file_cards}
+      </div>
+    </section>
+        """
+    else:
+        library = ""
 
     index_html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -1177,13 +1537,18 @@ def build_index_page():
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SolveToGrow Developers</title>
+  <script>{THEME_INIT_JS.strip()}</script>
   <link rel="stylesheet" href="styles.css" />
+  <script src="site.js" defer></script>
 </head>
 <body>
   <header class="hero" style="--accent: #14b8a6;">
+    <nav class="topbar">
+      <p class="eyebrow">SolveToGrow</p>
+      {render_theme_toggle()}
+    </nav>
     <div class="hero-inner">
       <div class="hero-copy">
-        <p class="eyebrow">SolveToGrow</p>
         <h1>Three developers growing through consistent problem solving.</h1>
         <p>A clean archive for daily practice, personal solutions, and shared challenges.</p>
         <div class="stat-row">
@@ -1207,6 +1572,7 @@ def build_index_page():
     <section class="developer-grid" aria-label="Developer workspaces">
       {developer_cards}
     </section>
+    {library}
   </main>
 </body>
 </html>
@@ -1229,8 +1595,13 @@ def build_developer_page(developer):
           <span>Search files</span>
           <input type="search" placeholder="Name, language, or code text" data-file-search />
         </label>
-        <p class="visible-count" data-visible-count>{len(all_visible_files)} files shown</p>
+        <div class="toolbar-actions">
+          <button class="ghost-btn" type="button" data-expand-all>Expand all</button>
+          <button class="ghost-btn" type="button" data-collapse-all>Collapse all</button>
+          <p class="visible-count" data-visible-count>{len(all_visible_files)} files shown</p>
+        </div>
       </section>
+      {render_language_chips(all_visible_files)}
       <p class="empty-state" data-empty-state hidden>No matching files found.</p>
         """
 
@@ -1240,6 +1611,7 @@ def build_developer_page(developer):
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{html.escape(label)} Problems</title>
+  <script>{THEME_INIT_JS.strip()}</script>
   <link rel="stylesheet" href="styles.css" />
   <script src="site.js" defer></script>
 </head>
@@ -1247,6 +1619,7 @@ def build_developer_page(developer):
   <header class="hero developer-hero" style="--accent: {developer['accent']}; --soft: {developer['soft']}; --warm: {developer['warm']}; --ring: {developer['ring']};">
     <nav class="topbar">
       <a class="back-link" href="index.html"><span aria-hidden="true">&larr;</span> Team overview</a>
+      {render_theme_toggle()}
     </nav>
     <div class="hero-inner">
       <div class="hero-copy">

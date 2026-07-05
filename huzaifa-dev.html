@@ -4,6 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Huzaifa Dev Problems</title>
+  <script>(function () {
+  try {
+    var stored = localStorage.getItem("stg-theme");
+    var theme = stored || (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    document.documentElement.setAttribute("data-theme", theme);
+  } catch (e) {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
+})();</script>
   <link rel="stylesheet" href="styles.css" />
   <script src="site.js" defer></script>
 </head>
@@ -11,6 +20,12 @@
   <header class="hero developer-hero" style="--accent: #3b82f6; --soft: #dbeafe; --warm: #fef3c7; --ring: rgba(59, 130, 246, 0.2);">
     <nav class="topbar">
       <a class="back-link" href="index.html"><span aria-hidden="true">&larr;</span> Team overview</a>
+      
+      <button class="ghost-btn theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Toggle theme">
+        <span class="theme-icon" aria-hidden="true"><span class="icon-dark">&#9790;</span><span class="icon-light">&#9728;</span></span>
+        <span>Theme</span>
+      </button>
+    
     </nav>
     <div class="hero-inner">
       <div class="hero-copy">
@@ -20,19 +35,19 @@
         <div class="stat-row">
           
       <div class="stat">
-        <strong>0</strong>
+        <strong>1</strong>
         <span>Developer files</span>
       </div>
     
           
       <div class="stat">
-        <strong>0</strong>
+        <strong>14</strong>
         <span>Developer lines</span>
       </div>
     
           
       <div class="stat">
-        <strong>0</strong>
+        <strong>1</strong>
         <span>Shared files</span>
       </div>
     
@@ -43,11 +58,71 @@
 
   <main class="content" style="--accent: #3b82f6; --soft: #dbeafe; --ring: rgba(59, 130, 246, 0.2);">
     
+      <section class="toolbar">
+        <label class="search-box">
+          <span>Search files</span>
+          <input type="search" placeholder="Name, language, or code text" data-file-search />
+        </label>
+        <div class="toolbar-actions">
+          <button class="ghost-btn" type="button" data-expand-all>Expand all</button>
+          <button class="ghost-btn" type="button" data-collapse-all>Collapse all</button>
+          <p class="visible-count" data-visible-count>2 files shown</p>
+        </div>
+      </section>
+      <div class="filter-chips" role="group" aria-label="Filter by language"><button class="chip is-active" type="button" data-lang-filter="all" aria-pressed="true">All</button><button class="chip" type="button" data-lang-filter="python" aria-pressed="false">Python</button></div>
+      <p class="empty-state" data-empty-state hidden>No matching files found.</p>
+        
     
       <section class="file-section">
         <h2>Developer Files</h2>
         <div class="file-grid">
-          <p class="empty-state">No problem files found in this workspace yet.</p>
+          
+      <article class="file-card" data-expand-card data-search="01_problem.py huzaifa-dev/01_problem.py python # a string in which there are some dublicate charachters, so create new string with without dublication # for example # word = neccessary # new_word= necsary word = input(&quot;enter a word: &quot;) marked = [] for l in word: if l not in marked: marked.append(l) marked = &#x27;&#x27;.join(marked) print(f&#x27;word: {word}&#x27;) print(f&#x27;new word: {marked}&#x27;)" data-lang="python" style="--accent: #3b82f6; --soft: #dbeafe; --ring: rgba(59, 130, 246, 0.2);">
+        <button class="file-toggle" type="button" aria-expanded="false" data-expand-toggle>
+          <span class="file-title">
+            <span class="file-heading-row">
+              <span class="file-heading">01_problem.py</span>
+              
+            </span>
+            <span class="file-summary"># A string in which there are some dublicate charachters, so create new string with without dublication</span>
+          </span>
+          <span class="file-side">
+            <span class="type-badge">PY</span>
+            <span class="expand-mark" aria-hidden="true">+</span>
+          </span>
+        </button>
+        <div class="file-detail-shell" data-expand-panel aria-hidden="true">
+          <div class="file-detail">
+            <div class="file-detail-inner">
+              <p class="file-path">huzaifa-dev/01_problem.py</p>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" data-copy data-label="Copy">Copy</button>
+                <pre><code># A string in which there are some dublicate charachters, so create new string with without dublication
+# For Example
+# word = Neccessary
+# New_word= Necsary
+
+word = input(&quot;Enter a word: &quot;)
+marked = []
+for l in word:
+    if l not in marked:
+        marked.append(l)
+marked = &#x27;&#x27;.join(marked)
+
+print(f&#x27;Word: {word}&#x27;)
+print(f&#x27;New Word: {marked}&#x27;)</code></pre>
+              </div>
+              <div class="file-meta">
+                <span class="meta-item">Python</span>
+                <span class="meta-item">14 lines</span>
+                <span class="meta-item">356 B</span>
+                <a class="file-link" href="huzaifa-dev/01_problem.py">Open raw file</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    
         </div>
       </section>
     
@@ -55,7 +130,64 @@
       <section class="file-section">
         <h2>Shared Problems</h2>
         <div class="file-grid">
-          <p class="empty-state">No shared problems found yet.</p>
+          
+      <article class="file-card" data-expand-card data-search="problems.py problems/problems.py python problem_01 = &quot;&quot;&quot; a string such that it has duplicate characters in it. the string can be of any length and can contain any characters. your solution should eliminate all the duplicate characters from the string and return a new string with only unique characters. eg. input: &quot;programming&quot; output: &quot;progamin&quot; &quot;&quot;&quot; problem_02 = &quot;&quot;&quot; write a program to count the number of characters in a string without using len(). eg. input: &quot;hello world&quot; output: 11 &quot;&quot;&quot; problem_03 = &quot;&quot;&quot; reverse a string without using slicing ([::-1]) or reversed(). eg. input: &quot;python&quot; output: &quot;nohtyp&quot; &quot;&quot;&quot;" data-lang="python" style="--accent: #3b82f6; --soft: #dbeafe; --ring: rgba(59, 130, 246, 0.2);">
+        <button class="file-toggle" type="button" aria-expanded="false" data-expand-toggle>
+          <span class="file-title">
+            <span class="file-heading-row">
+              <span class="file-heading">problems.py</span>
+              
+            </span>
+            <span class="file-summary">problem_01 = &quot;&quot;&quot;</span>
+          </span>
+          <span class="file-side">
+            <span class="type-badge">PY</span>
+            <span class="expand-mark" aria-hidden="true">+</span>
+          </span>
+        </button>
+        <div class="file-detail-shell" data-expand-panel aria-hidden="true">
+          <div class="file-detail">
+            <div class="file-detail-inner">
+              <p class="file-path">problems/problems.py</p>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" data-copy data-label="Copy">Copy</button>
+                <pre><code>problem_01 = &quot;&quot;&quot;
+A string such that it has duplicate characters in it. The string can be of any length and can contain any characters.
+Your solution should eliminate all the duplicate characters from the string and return a new string with only unique characters.
+
+eg. 
+Input: &quot;programming&quot;
+Output: &quot;progamin&quot;
+&quot;&quot;&quot;
+
+problem_02 = &quot;&quot;&quot;
+Write a program to count the number of characters in a string without using len().
+
+eg.
+Input: &quot;Hello World&quot;
+Output: 11
+&quot;&quot;&quot;
+
+problem_03 = &quot;&quot;&quot;
+Reverse a string without using slicing ([::-1]) or reversed().
+
+eg.
+Input: &quot;Python&quot;
+Output: &quot;nohtyP&quot;
+&quot;&quot;&quot;
+</code></pre>
+              </div>
+              <div class="file-meta">
+                <span class="meta-item">Python</span>
+                <span class="meta-item">25 lines</span>
+                <span class="meta-item">605 B</span>
+                <a class="file-link" href="problems/problems.py">Open raw file</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    
         </div>
       </section>
     

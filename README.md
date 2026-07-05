@@ -1,6 +1,6 @@
 # SolveToGrow
 
-SolveToGrow is a collaborative learning repository for Arham, Huzaifa, and Ahmed. The goal is to practice problem solving regularly, share solutions, and build a strong foundation in algorithms and data structures together.
+SolveToGrow is a collaborative learning repository for Arham, Huzaifa, and Ahmad. The goal is to practice problem solving regularly, share solutions, and build a strong foundation in algorithms and data structures together.
 
 ## Purpose
 
@@ -18,13 +18,15 @@ This repository is designed to help the team:
 SolveToGrow/
 ├── arham-dev/
 ├── huzaifa-dev/
-├── ahmed-dev/
-├── problems-unified/
+├── ahmad-dev/
+├── problems/
 ├── index.html
 ├── arham-dev.html
 ├── huzaifa-dev.html
-├── ahmed-dev.html
+├── ahmad-dev.html
 ├── generate_site.py
+├── styles.css
+├── site.js
 ├── README.md
 └── .gitignore
 ```
@@ -33,8 +35,8 @@ SolveToGrow/
 
 - arham-dev/: personal workspace for Arham
 - huzaifa-dev/: personal workspace for Huzaifa
-- ahmed-dev/: personal workspace for Ahmed
-- problems-unified/: shared folder for common or collaborative problem solutions
+- ahmad-dev/: personal workspace for Ahmad
+- problems/: shared folder for common or collaborative problem solutions
 
 ## File Naming Convention
 
@@ -98,7 +100,7 @@ When adding solutions, try to keep them organized and clear:
 
 1. Pick your personal folder.
 2. Add your solution files there.
-3. Place shared or common problems in the unified problems folder.
+3. Place shared or common problems in the shared `problems/` folder.
 4. Keep the repository clean and easy to navigate.
 
 Welcome to a better, more organized way of growing through problem solving.

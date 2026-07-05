@@ -1,9 +1,14 @@
+from datetime import date
 from pathlib import Path
 from urllib.parse import quote
 import html
+import json
+import re
+import urllib.request
 
 ROOT = Path(__file__).resolve().parent
 SHARED_FOLDER = "problems"
+CONTRIB_CACHE = ROOT / ".contrib_cache"
 
 DEVELOPERS = [
     {
@@ -11,6 +16,7 @@ DEVELOPERS = [
         "name": "Arham",
         "initials": "AR",
         "focus": "Problem solving log",
+        "github": "Arhamjaved27",
         "accent": "#14b8a6",
         "soft": "#d8fbf4",
         "warm": "#ffedd5",
@@ -21,6 +27,7 @@ DEVELOPERS = [
         "name": "Huzaifa",
         "initials": "HZ",
         "focus": "Solution practice",
+        "github": "huzaifanasir08",
         "accent": "#3b82f6",
         "soft": "#dbeafe",
         "warm": "#fef3c7",
@@ -31,6 +38,7 @@ DEVELOPERS = [
         "name": "Ahmad",
         "initials": "AH",
         "focus": "Code challenges",
+        "github": "AhmedShimmas",
         "accent": "#f97316",
         "soft": "#ffedd5",
         "warm": "#dcfce7",
@@ -1050,6 +1058,191 @@ code {
     opacity: 1;
   }
 }
+
+/* --- GitHub contribution graph + profile link --- */
+:root {
+  --contrib-empty: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="dark"] {
+  --contrib-empty: rgba(255, 255, 255, 0.09);
+}
+
+.contrib {
+  margin-top: 22px;
+}
+
+.contrib:not(.is-compact) {
+  max-width: 100%;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+}
+
+.contrib-caption {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.contrib-caption strong {
+  color: var(--ink);
+}
+
+.contrib-scroll {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.contrib-inner {
+  --sq: 11px;
+  --gap: 3px;
+  --pitch: calc(var(--sq) + var(--gap));
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  gap: 6px;
+}
+
+.contrib-months {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+}
+
+.contrib-month {
+  width: calc(var(--span) * var(--pitch));
+  color: var(--muted);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.contrib-weekdays {
+  grid-column: 1;
+  grid-row: 2;
+  display: grid;
+  grid-template-rows: repeat(7, var(--sq));
+  gap: var(--gap);
+  padding-right: 4px;
+}
+
+.contrib-weekdays span {
+  color: var(--muted);
+  font-size: 0.66rem;
+  line-height: var(--sq);
+  text-align: right;
+}
+
+.contrib-weekdays span:nth-child(1) { grid-row: 2; }
+.contrib-weekdays span:nth-child(2) { grid-row: 4; }
+.contrib-weekdays span:nth-child(3) { grid-row: 6; }
+
+.contrib-weeks {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  gap: var(--gap);
+}
+
+.contrib-week {
+  display: grid;
+  grid-template-rows: repeat(7, var(--sq));
+  gap: var(--gap);
+}
+
+.contrib-day {
+  width: var(--sq, 11px);
+  height: var(--sq, 11px);
+  border-radius: 2px;
+  background: var(--contrib-empty);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.contrib-day[data-level="e"] { background: transparent; box-shadow: none; }
+.contrib-day[data-level="0"] { background: var(--contrib-empty); }
+.contrib-day[data-level="1"] { background: color-mix(in srgb, var(--accent) 32%, var(--contrib-empty)); }
+.contrib-day[data-level="2"] { background: color-mix(in srgb, var(--accent) 58%, var(--contrib-empty)); }
+.contrib-day[data-level="3"] { background: color-mix(in srgb, var(--accent) 80%, var(--contrib-empty)); }
+.contrib-day[data-level="4"] { background: var(--accent); }
+
+.contrib-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.contrib-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.contrib-legend .contrib-day {
+  width: 11px;
+  height: 11px;
+}
+
+.contrib-empty {
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+
+/* Compact graph on the index developer cards */
+.contrib.is-compact {
+  --sq: 7px;
+  --gap: 2px;
+  margin-top: 16px;
+}
+
+.contrib.is-compact .contrib-scroll {
+  display: flex;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: 0;
+}
+
+.contrib-note {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.profile-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 0.86rem;
+  text-decoration: none;
+  transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.profile-btn:hover {
+  border-color: var(--accent, #14b8a6);
+  transform: translateY(-1px);
+  box-shadow: 0 0 22px var(--ring, rgba(20, 184, 166, 0.18));
+}
+
+.profile-btn:focus-visible {
+  outline: 3px solid var(--ring, rgba(20, 184, 166, 0.24));
+  outline-offset: 2px;
+}
+
+.profile-btn svg {
+  flex: 0 0 auto;
+}
 """
 
 THEME_INIT_JS = """
@@ -1307,6 +1500,176 @@ def latest_text(files) -> str:
     return f"Latest file: {latest.name}"
 
 
+MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+               "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+GITHUB_MARK_SVG = (
+    '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" fill="currentColor">'
+    '<path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>'
+)
+
+
+def fetch_contributions(username: str):
+    """Fetch a user's GitHub contribution calendar, caching the last good copy."""
+    if not username:
+        return None
+
+    CONTRIB_CACHE.mkdir(exist_ok=True)
+    cache_file = CONTRIB_CACHE / f"{username}.json"
+    url = f"https://github.com/users/{username}/contributions"
+
+    try:
+        request = urllib.request.Request(
+            url, headers={"User-Agent": "Mozilla/5.0 (SolveToGrow site generator)"}
+        )
+        with urllib.request.urlopen(request, timeout=20) as response:
+            page = response.read().decode("utf-8", "replace")
+
+        flat = re.sub(r"\s+", " ", page)
+        total_match = re.search(r"([\d,]+) contributions? in the last year", flat)
+        total = int(total_match.group(1).replace(",", "")) if total_match else 0
+        days = [
+            [day, int(level)]
+            for day, level in re.findall(
+                r'data-date="(\d{4}-\d{2}-\d{2})"[^>]*?data-level="(\d)"', page
+            )
+        ]
+        if days:
+            data = {"total": total, "days": days}
+            cache_file.write_text(json.dumps(data), encoding="utf-8")
+            return data
+    except Exception:
+        pass
+
+    if cache_file.exists():
+        try:
+            return json.loads(cache_file.read_text(encoding="utf-8"))
+        except Exception:
+            return None
+    return None
+
+
+def build_calendar(days):
+    """Group (date, level) pairs into Sunday-started week columns of 7 slots."""
+    parsed = sorted(
+        (date.fromisoformat(day), int(level)) for day, level in days
+    )
+    columns = []
+    column = [None] * 7
+    started = False
+    for day, level in parsed:
+        weekday = (day.weekday() + 1) % 7  # Sun=0 .. Sat=6, matching GitHub
+        if weekday == 0 and started:
+            columns.append(column)
+            column = [None] * 7
+        column[weekday] = (day, level)
+        started = True
+    if started:
+        columns.append(column)
+    return columns
+
+
+def month_spans(columns):
+    """Return [(month_label, span_columns)] aligned to the week columns."""
+    spans = []
+    current_month = None
+    for column in columns:
+        first = next((cell for cell in column if cell), None)
+        month = first[0].month if first else current_month
+        if month != current_month:
+            spans.append([MONTH_NAMES[month - 1], 1])
+            current_month = month
+        elif spans:
+            spans[-1][1] += 1
+    return spans
+
+
+def render_contrib_graph(developer, compact: bool = False) -> str:
+    data = developer.get("_contrib")
+    profile = render_profile_button(developer) if not compact else ""
+
+    if not data or not data.get("days"):
+        if compact:
+            return ""
+        return f"""
+      <div class="contrib" style="--accent: {developer['accent']};">
+        <p class="contrib-empty">Contribution graph is unavailable right now.</p>
+        {profile}
+      </div>
+        """
+
+    columns = build_calendar(data["days"])
+    weeks_html = []
+    for column in columns:
+        cells = []
+        for cell in column:
+            if cell is None:
+                cells.append('<span class="contrib-day" data-level="e"></span>')
+            else:
+                day, level = cell
+                title = f"{day.isoformat()}"
+                cells.append(
+                    f'<span class="contrib-day" data-level="{level}" title="{title}"></span>'
+                )
+        weeks_html.append(f'<div class="contrib-week">{"".join(cells)}</div>')
+
+    weeks = f'<div class="contrib-weeks">{"".join(weeks_html)}</div>'
+    css_class = "contrib is-compact" if compact else "contrib"
+    style = f"--accent: {developer['accent']};"
+
+    if compact:
+        return f"""
+      <div class="{css_class}" style="{style}" aria-hidden="true">
+        <div class="contrib-scroll">{weeks}</div>
+      </div>
+        """
+
+    months = "".join(
+        f'<span class="contrib-month" style="--span: {span}">{label if span > 1 else ""}</span>'
+        for label, span in month_spans(columns)
+    )
+    total = data.get("total", 0)
+    return f"""
+      <figure class="{css_class}" style="{style}">
+        <figcaption class="contrib-caption">
+          <strong>{total}</strong> contributions in the last year
+        </figcaption>
+        <div class="contrib-scroll">
+          <div class="contrib-inner">
+            <div class="contrib-months">{months}</div>
+            <div class="contrib-weekdays"><span>Mon</span><span>Wed</span><span>Fri</span></div>
+            {weeks}
+          </div>
+        </div>
+        <div class="contrib-footer">
+          {profile}
+          <div class="contrib-legend">
+            <span>Less</span>
+            <span class="contrib-day" data-level="0"></span>
+            <span class="contrib-day" data-level="1"></span>
+            <span class="contrib-day" data-level="2"></span>
+            <span class="contrib-day" data-level="3"></span>
+            <span class="contrib-day" data-level="4"></span>
+            <span>More</span>
+          </div>
+        </div>
+      </figure>
+    """
+
+
+def render_profile_button(developer) -> str:
+    username = developer.get("github")
+    if not username:
+        return ""
+    url = f"https://github.com/{quote(username)}"
+    return f"""
+      <a class="profile-btn" href="{url}" target="_blank" rel="noopener noreferrer">
+        {GITHUB_MARK_SVG}
+        <span>@{html.escape(username)}</span>
+      </a>
+    """
+
+
 def write_static_assets():
     (ROOT / "styles.css").write_text(SITE_CSS.strip() + "\n", encoding="utf-8")
     (ROOT / "site.js").write_text(SITE_JS.strip() + "\n", encoding="utf-8")
@@ -1381,6 +1744,12 @@ def render_developer_card(developer) -> str:
     files = get_problem_files(developer["folder"])
     line_count = total_lines(files)
     label = f"{developer['name']} Dev"
+    contrib = developer.get("_contrib")
+    compact_graph = render_contrib_graph(developer, compact=True)
+    contrib_note = (
+        f'<p class="contrib-note">{contrib["total"]} GitHub contributions this year</p>'
+        if contrib else ""
+    )
 
     return f"""
       <a class="developer-card" href="{developer['folder']}.html" style="--accent: {developer['accent']}; --soft: {developer['soft']}; --warm: {developer['warm']}; --ring: {developer['ring']};">
@@ -1403,6 +1772,8 @@ def render_developer_card(developer) -> str:
               <span>Lines</span>
             </div>
           </div>
+          {compact_graph}
+          {contrib_note}
         </div>
         <span class="card-action">Open workspace <span aria-hidden="true">&rarr;</span></span>
       </a>
@@ -1631,6 +2002,7 @@ def build_developer_page(developer):
           {render_stat(total_lines(files), "Developer lines")}
           {render_stat(len(shared_files), "Shared files")}
         </div>
+        {render_contrib_graph(developer)}
       </div>
     </div>
   </header>
@@ -1647,6 +2019,12 @@ def build_developer_page(developer):
 
 
 if __name__ == "__main__":
+    for developer_config in DEVELOPERS:
+        contrib = fetch_contributions(developer_config.get("github"))
+        developer_config["_contrib"] = contrib
+        status = f"{contrib['total']} contributions" if contrib else "unavailable"
+        print(f"  {developer_config['name']:8} @{developer_config.get('github')}: {status}")
+
     write_static_assets()
     build_index_page()
     for developer_config in DEVELOPERS:

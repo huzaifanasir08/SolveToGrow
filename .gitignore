@@ -26,3 +26,6 @@ node_modules/
 
 # Generated / cached
 .contrib_cache/
+
+# Local tooling
+.claude/

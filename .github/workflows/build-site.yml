@@ -1,0 +1,55 @@
+name: Build site
+
+# Regenerates the static pages (index + developer pages) from the real folder
+# contents and each developer's live GitHub contribution graph, then commits
+# the refreshed HTML/CSS/JS back to the repo.
+on:
+  push:
+    branches: [main]
+    # Only re-run when the *inputs* change — not when this workflow commits the
+    # generated output. This keeps the action from triggering itself in a loop.
+    paths:
+      - "*-dev/**"
+      - "problems/**"
+      - "generate_site.py"
+      - ".github/workflows/build-site.yml"
+  schedule:
+    # Daily refresh so the contribution graphs stay current (06:00 UTC).
+    - cron: "0 6 * * *"
+  workflow_dispatch: {}
+
+# Allow the job to push the regenerated files back using the default token.
+permissions:
+  contents: write
+
+# Never let two builds race to push at the same time.
+concurrency:
+  group: build-site
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate site
+        run: python generate_site.py
+
+      - name: Commit regenerated pages
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html *-dev.html styles.css site.js
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: regenerate site [skip ci]"
+            git push
+          fi

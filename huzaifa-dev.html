@@ -35,13 +35,13 @@
         <div class="stat-row">
           
       <div class="stat">
-        <strong>3</strong>
+        <strong>4</strong>
         <span>Developer files</span>
       </div>
     
           
       <div class="stat">
-        <strong>54</strong>
+        <strong>95</strong>
         <span>Developer lines</span>
       </div>
     
@@ -97,7 +97,7 @@
         <div class="toolbar-actions">
           <button class="ghost-btn" type="button" data-expand-all>Expand all</button>
           <button class="ghost-btn" type="button" data-collapse-all>Collapse all</button>
-          <p class="visible-count" data-visible-count>4 files shown</p>
+          <p class="visible-count" data-visible-count>5 files shown</p>
         </div>
       </section>
       <div class="filter-chips" role="group" aria-label="Filter by language"><button class="chip is-active" type="button" data-lang-filter="all" aria-pressed="true">All</button><button class="chip" type="button" data-lang-filter="python" aria-pressed="false">Python</button></div>
@@ -254,6 +254,80 @@ print(f&quot;Inverse string of {string} is {reverse}&quot;)
                 <span class="meta-item">20 lines</span>
                 <span class="meta-item">359 B</span>
                 <a class="file-link" href="huzaifa-dev/03_problem.py">Open raw file</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    
+
+      <article class="file-card" data-expand-card data-search="04_problem.py huzaifa-dev/04_problem.py python # problem # given two strings, determine whether they are at most one edit away. # *an edit is:* # insert one character # delete one character # replace one character # *example:* # *input:* # &quot;pale&quot; # &quot;ple&quot; # *output:* # true # *input:* # &quot;pale&quot; # &quot;bake&quot; # *output:* # false # solution string_1 = input(&#x27;enter a string: &#x27;) string_2 = input(&#x27;enter another string: &#x27;) same = false for char in string_1: s = string_1.replace(char,&#x27;&#x27;) if string_2 == s: same = true break print(same) # time &amp; space complexity # time complexity: o(n²) # space complexity: o(n)" data-lang="python" style="--accent: #3b82f6; --soft: #dbeafe; --ring: rgba(59, 130, 246, 0.2);">
+        <button class="file-toggle" type="button" aria-expanded="false" data-expand-toggle>
+          <span class="file-title">
+            <span class="file-heading-row">
+              <span class="file-heading">04_problem.py</span>
+              
+            </span>
+            <span class="file-summary"># Problem</span>
+          </span>
+          <span class="file-side">
+            <span class="type-badge">PY</span>
+            <span class="expand-mark" aria-hidden="true">+</span>
+          </span>
+        </button>
+        <div class="file-detail-shell" data-expand-panel aria-hidden="true">
+          <div class="file-detail">
+            <div class="file-detail-inner">
+              <p class="file-path">huzaifa-dev/04_problem.py</p>
+              <div class="code-wrap">
+                <button class="copy-btn" type="button" data-copy data-label="Copy">Copy</button>
+                <pre><code># Problem
+
+# Given two strings, determine whether they are at most one edit away.
+
+#  *An edit is:* 
+# Insert one character
+# Delete one character
+# Replace one character
+
+#  *Example:* 
+#  *Input:* 
+# &quot;pale&quot;
+# &quot;ple&quot;
+#  *Output:* 
+# True
+
+#  *Input:* 
+# &quot;pale&quot;
+# &quot;bake&quot;
+
+#  *Output:* 
+# False
+
+
+# Solution
+string_1 = input(&#x27;Enter a string: &#x27;)
+string_2 = input(&#x27;Enter another string: &#x27;)
+
+same = False 
+for char in string_1:
+    s = string_1.replace(char,&#x27;&#x27;)
+    if string_2 == s:
+        same = True
+        break
+
+print(same)
+
+
+# Time &amp; Space Complexity
+# Time Complexity: O(n²)
+# Space Complexity: O(n)</code></pre>
+              </div>
+              <div class="file-meta">
+                <span class="meta-item">Python</span>
+                <span class="meta-item">41 lines</span>
+                <span class="meta-item">604 B</span>
+                <a class="file-link" href="huzaifa-dev/04_problem.py">Open raw file</a>
               </div>
             </div>
           </div>

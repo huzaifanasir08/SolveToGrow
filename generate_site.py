@@ -1929,7 +1929,7 @@ def build_index_page():
           {render_stat(len(shared_files), "Shared files")}
         </div>
       </div>
-      {render_code_board()}
+      # {render_code_board()}
     </div>
   </header>
 
